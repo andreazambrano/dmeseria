@@ -19,14 +19,14 @@ export class AuthService {
 		});
 
 	registerUser(name :string, email: string, password: string){
-		const url_api ='https://db.andesproadventures.com:3025/api/Users';
+		const url_api ='https://db.lameseria.cl:3029/api/Users';
 		return this.http
 		.post<UserInterface>(url_api,{name,email,password},{headers:this.headers})
 		.pipe(map(data => data));
 	}
 
 	loginUser(email:string, password:string):Observable<any>{
-		const url_api ='https://db.andesproadventures.com:3025/api/Users/login?include=user';
+		const url_api ='https://db.lameseria.cl:3029/api/Users/login?include=user';
 		return this.http
 		.post<UserInterface>(url_api,{email,password},{headers:this.headers})
 		.pipe(map(data => data));

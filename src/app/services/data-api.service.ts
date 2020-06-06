@@ -31,112 +31,112 @@ export class DataApiService {
   		Authorization: this.authService.getToken()
   		});
 	saveTixFree(tix :TixInterface){
-		const url_api='https://db.andesproadventures.com:3025/api/tixes';
+		const url_api='https://db.lameseria.cl:3029/api/tixes';
 		return this.http
 		.post<TixInterface>(url_api, tix)
 		.pipe(map(data => data));
 	}
   	getSalePending(){	
-		const url_api='https://db.andesproadventures.com:3025/api/sale?filter[where][status]=new';
+		const url_api='https://db.lameseria.cl:3029/api/sale?filter[where][status]=new';
 		return (this.sales = this.http.get(url_api));
 	}
 	getOrderPending(){	
-		const url_api='https://db.andesproadventures.com:3025/api/order?filter[where][status]=new';
+		const url_api='https://db.lameseria.cl:3029/api/order?filter[where][status]=new';
 		return (this.orders = this.http.get(url_api));
 	}
 	getSales(){	
-		const url_api = 'https://db.andesproadventures.com:3025/api/sale';
+		const url_api = 'https://db.lameseria.cl:3029/api/sale';
 		return this.http.get(url_api);
 	}
 	getOrders(){	
-		const url_api = 'https://db.andesproadventures.com:3025/api/order';
+		const url_api = 'https://db.lameseria.cl:3029/api/order';
 		return this.http.get(url_api);
 	}
 	getAllTixs(){
-		const url_api = 'https://db.andesproadventures.com:3025/api/tixes?filter[where][status]=activated';
+		const url_api = 'https://db.lameseria.cl:3029/api/tixes?filter[where][status]=activated';
 		return this.http.get(url_api);
 	}
 	getBulbos(){
-		const url_api = 'https://db.andesproadventures.com:3025/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Bulbos';
+		const url_api = 'https://db.lameseria.cl:3029/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Bulbos';
 		return this.http.get(url_api);
 	}
 	getFrutos(){
-		const url_api = 'https://db.andesproadventures.com:3025/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Frutos';
+		const url_api = 'https://db.lameseria.cl:3029/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Frutos';
 		return this.http.get(url_api);
 	}
 	getLegumbres(){
-		const url_api = 'https://db.andesproadventures.com:3025/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Legumbres';
+		const url_api = 'https://db.lameseria.cl:3029/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Legumbres';
 		return this.http.get(url_api);
 	}
 	getTuberculos(){
-		const url_api = 'https://db.andesproadventures.com:3025/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Tubérculos';
+		const url_api = 'https://db.lameseria.cl:3029/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Tubérculos';
 		return this.http.get(url_api);
 	}
 	getVerduras(){
-		const url_api = 'https://db.andesproadventures.com:3025/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Verduras';
+		const url_api = 'https://db.lameseria.cl:3029/api/tixes?filter[where][and][0][status]=activated&filter[where][and][1][category]=Verduras';
 		return this.http.get(url_api);
 	}
 	getInfo(){
-		const url_api=`https://db.andesproadventures.com:3025/api/infos/`;
+		const url_api=`https://db.lameseria.cl:3029/api/infos/`;
 		this.info = this.http.get(url_api);
 		return (this.info);
 	}
 	getTixById(id:string){
 		let indice = id;
-		const url_api=`https://db.andesproadventures.com:3025/api/tixes/${indice}`;
+		const url_api=`https://db.lameseria.cl:3029/api/tixes/${indice}`;
 		this.tix = this.http.get(url_api);
 		return (this.tix);
 	}
 	getSaleById(id:string){
 		let indice = id;
-		const url_api=`https://db.andesproadventures.com:3025/api/sale/${indice}`;
+		const url_api=`https://db.lameseria.cl:3029/api/sale/${indice}`;
 		this.sale = this.http.get(url_api);
 		return (this.sale);
 	}
 	getOrderById(id:string){
 		let indice = id;
-		const url_api=`https://db.andesproadventures.com:3025/api/order/${indice}`;
+		const url_api=`https://db.lameseria.cl:3029/api/order/${indice}`;
 		this.order = this.http.get(url_api);
 		return (this.order);
 	}
 	updateCurrency(info :InfoInterface, id: string){
 		// let token = this.authService.getToken();
-		const url_api=`https://db.andesproadventures.com:3025/api/infos/${id}`;
+		const url_api=`https://db.lameseria.cl:3029/api/infos/${id}`;
 		return this.http
 		.put<InfoInterface>(url_api, info)
 		.pipe(map(data => data));
 	}
 	updatePorcentaje(info :InfoInterface, id: string){
 		// let token = this.authService.getToken();
-		const url_api=`https://db.andesproadventures.com:3025/api/infos/${id}`;
+		const url_api=`https://db.lameseria.cl:3029/api/infos/${id}`;
 		return this.http
 		.put<InfoInterface>(url_api, info)
 		.pipe(map(data => data));
 	}
 	updateAddress(info :InfoInterface, id: string){
 		// let token = this.authService.getToken();
-		const url_api=`https://db.andesproadventures.com:3025/api/infos/${id}`;
+		const url_api=`https://db.lameseria.cl:3029/api/infos/${id}`;
 		return this.http
 		.put<InfoInterface>(url_api, info)
 		.pipe(map(data => data));
 	}
 	updateTixCostPrice(tix :TixInterface, id: string){
 		// let token = this.authService.getToken();
-		const url_api=`https://db.andesproadventures.com:3025/api/tixes/${id}`;
+		const url_api=`https://db.lameseria.cl:3029/api/tixes/${id}`;
 		return this.http
 		.put<TixInterface>(url_api, tix)
 		.pipe(map(data => data));
 	}
 	updateTixBeneficio(tix :TixInterface, id: string){
 		// let token = this.authService.getToken();
-		const url_api=`https://db.andesproadventures.com:3025/api/tixes/${id}`;
+		const url_api=`https://db.lameseria.cl:3029/api/tixes/${id}`;
 		return this.http
 		.put<TixInterface>(url_api, tix)
 		.pipe(map(data => data));
 	}
 	updateTixStock(tix :TixInterface, id: string){
 		// let token = this.authService.getToken();
-		const url_api=`https://db.andesproadventures.com:3025/api/tixes/${id}`;
+		const url_api=`https://db.lameseria.cl:3029/api/tixes/${id}`;
 		return this.http
 		.put<TixInterface>(url_api, tix)
 		.pipe(map(data => data));
