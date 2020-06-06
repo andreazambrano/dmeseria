@@ -43,6 +43,7 @@ public tix : TixInterface ={
       userd:"",
       productName:"",
       description:"",
+      dimensiones:"",
       notes:"",
       category:"categoría",
       check:[],

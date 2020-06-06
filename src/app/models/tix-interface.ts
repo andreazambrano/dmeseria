@@ -18,6 +18,7 @@ export interface TixInterface{
 	description?:string;
 	desLg?:string;
 	dificulty?:string;
+	dimensiones?:string;
 	discount?:number;
 	disponibilidad?:string;
 	distancia?:string;
