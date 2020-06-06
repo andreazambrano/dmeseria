@@ -1,0 +1,161 @@
+
+<div class="main-content pt-4">
+    <div class="breadcrumb">
+        <h1 class="mr-2">Resúmen de actividades</h1>
+         <div class="col">
+             <!-- <button class="btn btn-large btn-primary" id="startTourBtn">Take a tour</button> -->
+            <div class="dropdown" id="create-tour">
+                <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Día actual
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <!-- <a class="dropdown-item">Ultima semana</a> -->
+                    <a class="dropdown-item"  id="startTourBtn">Ultimos 15 días</a>
+                    <!-- <a class="dropdown-item" >Ultimo mes</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="separator-breadcrumb border-top"></div>
+    <div class="row">
+       
+        <div class="col-lg-3 col-md-6 col-sm-6">
+             <a routerLink="orders">
+                <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                    <div class="card-body text-center" id="create-tour"><i class="i-Check"></i>
+                        <div class="content">
+                            <p class="text-muted mt-2 mb-0">Pedidos nuevos</p>
+                            <p class="text-primary text-24 line-height-1 mb-2">{{this._uw.tamano}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center"><i class="i-Car-Coins"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">Pagos por verificar</p>
+                        <p class="text-primary text-24 line-height-1 mb-2">37</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center"><i class="i-Cash-register-2"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">Ventas concretadas</p>
+                        <p class="text-primary text-24 line-height-1 mb-2">16</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center"><i class="i-Financial"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">Ingresos por ventas</p>
+                        <p class="text-primary text-24 line-height-1 mb-2">$184</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- venta por categoria -->
+        <div class="col-lg-7 col-md-7 col-xl-7">
+            <a routerLink="orders">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ul-widget__head v-margin">
+                            <div class="ul-widget__head-label">
+                                <h3 class="ul-widget__head-title">Pedidos</h3>
+                            </div>
+                           
+                            <div >
+                                <i class="i-Full-Screen header-icon d-none d-sm-inline-block" routerLink="orders"></i>
+                            </div>
+                        </div>
+                        <div class="ul-widget-body">
+                            <div class="ul-widget3">
+                                <div class="ul-widget6__item--table">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="ul-widget6__tr--sticky-th">
+                                                <!-- <th scope="col">#</th> -->
+                                                <th scope="col">Cliente</th>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Monto</th>
+                                                <th scope="col">Método de pago</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- start tr-->
+                                            <tr *ngFor="let order of orders">
+                                                <!-- <td><span>
+                                                        <div class="ul-widget_user-card">
+                                                            <div class="ul-widget4__img"><img id="userDropdown" src="assets/dist-assets/images/faces/1.jpg" alt="" /></div>
+                                                        </div>
+                                                    </span></td> -->
+                                                    <td>{{order.personaContacto}}</td>
+                                                <td>11/28/2016</td>
+                                                    <td > 
+                                                    <a  style="cursor: pointer !important; ">
+                                                        <span [hidden]="order.status!='new'" class="badge badge-pill badge-outline-success p-2 m-1">Nuevo</span>
+                                                        <span [hidden]="order.status!='verificar'" class="badge badge-pill badge-outline-warning p-2 m-1">Por verificar</span>
+                                                        <span [hidden]="order.status!='proccess'" class="badge badge-pill badge-outline-info p-2 m-1">En proceso</span>
+                                                           <span [hidden]="order.status!='success'" class="badge badge-pill badge-outline-primary p-2 m-1">Concretada</span>
+                                                </a></td>
+                    
+
+                                                <td>{{order.total}}</td>
+                                                   <td>{{order.metodo}}</td>
+                                            </tr>
+                                            <!-- end tr-->                                       
+                                        </tbody>
+                                    </table>
+                                </div>
+                               <!--  <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="widget-list.html#">Anterior</a></li>
+                                        <li class="page-item"><a class="page-link" href="widget-list.html#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="widget-list.html#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="widget-list.html#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="widget-list.html#">Proximo</a></li>
+                                    </ul>
+                                </nav> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-5 col-md-5  col-sm-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-title">Ventas por categoría</div>
+                    <div id="echartPie" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+      
+        
+    </div>
+<!--     <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-body p-0">
+                    <h5 class="card-title m-0 p-3">Last 20 Day Leads</h5>
+                    <div id="echart3" style="height: 360px;"></div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+<div class="sidebar-overlay open"></div>
+<div class="flex-grow-1"></div>
+         

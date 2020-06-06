@@ -1,0 +1,56 @@
+<div class="sidebar-panel bg-white"  [hidden]="router.url.includes('/admin')" >
+    <div class="gull-brand pr-3 text-center mt-4 mb-2 d-flex justify-content-center align-items-center">
+        <a routerLink="">
+        <img class="pl-3" src="assets/dist-assets/images/logo.png" alt="alt" />
+       
+         <span class=" item-name text-24 text-primary font-weight-700">Dashboard</span>
+          </a>
+        <div class="sidebar-compact-switch ml-auto"><span></span></div>
+    </div>
+    <div class="scroll-nav ps ps--active-y" data-perfect-scrollbar="data-perfect-scrollbar" data-suppress-scroll-x="true" >
+        <div class="side-nav"  >
+            <div class="main-menu">
+                <ul class="metismenu" id="menu">
+                    <li class="Ul_li--hover"><a class="has-arrow" ><i class="i-Shop text-24 mr-2 text-muted"></i><span class="item-name   text-24" >Tienda</span></a>
+                        <ul class="mm-collapse">
+                            <li class="item-name"><a routerLink="products"><i class="nav-icon i-Shopping-Basket mr-2  text-24 "></i><span class="">Productos</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="Ul_li--hover"><a class="has-arrow" ><i class="i-Cash-register-2 text-24 mr-2 "></i><span class="item-name   text-24" >Ventas</span></a>
+                        <ul class="mm-collapse">
+                           <!--  <li class="item-name"><a routerLink="sales"><i class="nav-icon i-Receipt-3"></i><span class="item-name">Pedidos</span></a></li> -->
+                            <li class="item-name"><a routerLink="orders"><i class="nav-icon  i-Check text-24 "></i><span class="item-name">Pedidos</span></a></li>
+                           
+                             <li class="item-name" id="create-tour2"><a  id="startTourBtn2"><i class="nav-icon i-Line-Chart text-24 "></i><span class="item-name">Reportes</span></a></li>
+                            
+                        </ul>
+
+                    </li>
+                    <li class="Ul_li--hover" > <a class="has-arrow" ><i class="i-MaleFemale text-24 mr-2 "></i><span class="item-name   text-24" >Clientes</span></a>
+                        <ul class="mm-collapse">
+                            <li class="item-name" id="create-tour3"><a id="startTourBtn3"><i class="nav-icon i-Business-Mens text-24 "></i><span class="item-name">Listado</span></a></li>
+                            
+                        </ul>
+                    </li>
+                    <p class="main-menu-title  ml-3 font-weight-700 text-13 mt-4 mb-2">Configuraciones</p>
+                    <li class="Ul_li--hover"><a routerLink="config"><i class="  i-Gears text-24 mr-2 "></i><span class="item-name   text-24" >Parámetros de app</span></a>
+                        
+                    </li>
+                 
+                </ul>
+            </div>
+        </div>
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+        </div>
+        <div class="ps__rail-y" style="top: 0px; height: 404px; right: 0px;">
+            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 325px;"></div>
+        </div>
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+        </div>
+        <div class="ps__rail-y" style="top: 0px; height: 404px; right: 0px;">
+            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 325px;"></div>
+        </div>
+    </div>
+</div>

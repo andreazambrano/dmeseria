@@ -1,0 +1,94 @@
+<div class="app-admin-wrap layout-sidebar-vertical sidebar-full" [hidden]="router.url.includes('/admin')">
+ 	<div class="switch-overlay" [hidden]="router.url.includes('/admin')"></div>
+    <div class="main-content-wrap mobile-menu-content bg-off-white m-0">
+        <header class="main-header bg-white d-flex justify-content-between p-2" [hidden]="router.url.includes('/admin')">
+            <div class="header-toggle" >
+                <div class="menu-toggle mobile-menu-icon">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <i class="i-Arrow-Left mr-3 text-20 cursor-pointer" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pedido anterior" [hidden]="!router.url.includes('/orderdetail') || this._uw.indice==0" (click)="anterior()"> </i>
+                <span [hidden]="!router.url.includes('/orderdetail')">  
+                {{this._uw.indice+1}} / {{this._uw.tamano}} 
+                </span>
+                <i class="i-Arrow-Right mr-3 text-20 mobile-hide cursor-pointer" data-toggle="tooltip" data-placement="top" title="" data-original-title="Próximo pedido" [hidden]="!router.url.includes('/orderdetail') || this._uw.tamano-this._uw.indice<=1"  (click)="siguiente()"></i>
+                <!-- <i class="i-Arrow-Refresh mobile-hide mr-3 text-20 cursor-pointer" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar"></i> -->
+                <i class="i-Arrow-Refresh mobile-hide mr-3 text-20 cursor-pointer" data-toggle="tooltip" data-placement="top" title="" data-original-title="Actualizar"[hidden]="router.url.includes('/orderdetail')"> </i>
+            </div>
+
+            <div class="header-part-right" >
+
+                 <button class="btn btn-success m-1" type="button" [hidden]="!router.url.includes('/products')" routerLink="addproduct"><i class="fa fa-plus text-15" ></i> </button>
+                  <button class="btn btn-warning m-1" type="button" [hidden]="!router.url.includes('/productdetail')"><i class="i-Pen-4 text-15"></i> </button>
+
+
+                <div class="col" *ngIf="this._uw.info[0]" [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd || router.url.includes('/config')">
+                    <div class="dropdown" >
+                        <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Bs.S
+                        </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" (click)=setColp()> COLP (Bs.S. {{this._uw.info[0].colp}})</a>
+                            <a class="dropdown-item" (click)=setUsd()>$ USD (Bs.S. {{1/this._uw.info[0].usd |  number:'1.0-0' }})</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col" *ngIf="this._uw.info[0]" [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].usd || router.url.includes('/config')">
+                    <div class="dropdown" >
+                        <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            COLP (Bs.S. {{this._uw.info[0].colp}}) 
+                        </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" (click)=setBs()> Bs.S.</a>
+                            <a class="dropdown-item" (click)=setUsd()>$ USD (Bs.S. {{1/this._uw.info[0].usd |  number:'1.0-0' }})</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col" *ngIf="this._uw.info[0]" [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].colp || router.url.includes('/config')">
+                    <div class="dropdown" >
+                        <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           USD (Bs.S. {{1/this._uw.info[0].usd |  number:'1.0-0' }}) 
+                        </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" (click)=setBs()> Bs.S.</a>
+                            <a class="dropdown-item" (click)=setColp()>COLP (Bs.S. {{this._uw.info[0].colp}})</a>
+                        </div>
+                    </div>
+                </div>
+            	<i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen=""></i>
+                <div class="dropdown dropleft"><i class="i-Safe-Box text-muted header-icon" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="menu-icon-grid">
+                            <a routerLink=""><i class="i-Shop-4"></i> Resumen</a>
+                            <a routerLink="orders"><i class="i-Check"></i> Pedidos</a>
+                            <a routerLink="products"><i class="i-Shopping-Basket"></i> Productos</a>
+                           <!--  <a href="dashboard1.html#"><i class="i-File-Clipboard-File--Text"></i> Forms</a>
+                            <a href="dashboard1.html#"><i class="i-Checked-User"></i> Sessions</a>
+                            <a href="dashboard1.html#"><i class="i-Ambulance"></i> Support</a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <div class="user col align-self-end">
+                        <img src="assets/dist-assets/images/faces/3.jpg" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                            <div class="dropdown-header" >
+                                <a (click)="onLogout()" style="cursor: pointer !important; ">
+                                    
+                                <i class="i-Power-3 mr-1" > </i>Cerrar Sessión
+                                </a>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+		<app-sidenav [hidden]="router.url.includes('/admin')" > </app-sidenav>
+		<router-outlet [hidden]="router.url.includes('/admin')" ></router-outlet>
+        <!-- <app-admin [hidden]="!router.url.includes('/admin')" ></app-admin> -->
+		<app-footer></app-footer>
+	</div>
+</div>
+ <app-admin [hidden]="!router.url.includes('/admin')" ></app-admin>
+	

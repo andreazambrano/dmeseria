@@ -1,0 +1,149 @@
+ <div class="main-content pt-4" >
+     <div class="breadcrumb">
+        <ul>
+            <li><a routerLink="/products" >Productos</a></li>
+            <li>Agregar un producto a la tienda </li>
+        </ul>
+    </div>
+	<div class="row">
+		<div class="col-md-5" style="
+						padding: 15px 15px 15px 15px; background:#fff!important; border-radius: 10px;">
+						<ngx-file-picker
+						    [uploadType]="'multi'"
+						    (validationError)= "onValidationError($event)"
+						    [adapter]="adapter"
+						    [fileExtensions]="['pdf', 'jpeg','jpg', 'png', 'PNG', 'mp4', 'css', 'docx', 'txt','webp']"
+						    (uploadSuccess)="onUploadSuccess($event)"
+						    (removeSuccess)="onRemoveSuccess($event)"
+						  
+						    [showPreviewContainer]="true"
+						    [accept]="'image/*'"
+						    (fileAdded)="onFileAdded($event)">
+						</ngx-file-picker>									
+					</div>
+					<div class="col-md-6" >
+						<div class="Prasi-form login-form--register checkout-form">
+							<form  class=""[formGroup]="ngFormAddtixs" (ngSubmit) ="sendTix()" >
+								<aw-wizard >
+									<aw-wizard-step stepTitle="">
+										<div class="row" > 
+											
+											<div class="col-md-6 col-xs-12">
+												<div class="form-group">
+													<input type="text" class="form-control" id="productName" formControlName="productName" placeholder="Nombre del insumo" [(ngModel)]="tix.productName"
+													[ngClass]="{ 'is-invalid': submitted && fval.productName.errors }"
+													required><span class="required"></span>
+													<div *ngIf="submitted && fval.productName.errors" class="invalid-feedback">
+														<div *ngIf="fval.productName.errors.required" class="errorLabel">
+														* El nombre del insumo es un campo requerido.
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-3 col-xs-12">
+												<div class="form-group">
+													<input type="text" class="form-control"  id="presentacion" formControlName="presentacion" placeholder="presentacion" [(ngModel)]="tix.presentacion"
+													[ngClass]="{ 'is-invalid': submitted && fval.presentacion.errors }"
+													required>
+													<div *ngIf="submitted && fval.presentacion.errors" class="invalid-feedback">
+														<div *ngIf="fval.presentacion.errors.required" class="errorLabel">
+														* La presentacion es requerida.
+														</div>
+
+													</div>
+												</div>
+											</div>
+											
+											
+											
+										
+											<div class="col-md-12 col-xs-12">
+												<div class="form-group">
+													<textarea class="form-control height-80" id="description" formControlName="description" placeholder="Descripción" [(ngModel)]="tix.description"
+													[ngClass]="{ 'is-invalid': submitted && fval.description.errors }"
+													required></textarea>
+													<div *ngIf="submitted && fval.description.errors" class="invalid-feedback">
+														<div *ngIf="fval.description.errors.required" class="errorLabel">
+														* La descripción es requerida.
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="col-md-3 col-xs-12"  >
+												<div class="form-group">
+													<label for="globalPrice" style="text-transform: none;">Precio</label>
+													<input type="text" class="form-control" id="globalPrice" formControlName="globalPrice" 
+													placeholder="Precio" 
+													>
+												</div>
+											</div>
+											<div class="col-md-4 col-xs-12">
+											<!-- 	<label style="text-transform: lowercase;">Categoría</label>
+												<select    id="category" formControlName="category" [(ngModel)]="tix.category"
+												[ngClass]="{ 'is-invalid': submitted && fval.category.errors }"
+												required (click)="setType()" class="nice-select" >
+													<option>Cupcakes</option>
+													<option>Tortas</option>
+													<option>Galletas</option>
+												</select> -->
+
+
+											<label class="ul-form__label" for="inputEmail13">Categoría:</label>
+			                       
+			                        		<div class="form-group mb-3">
+		                                        <select id="category" formControlName="category" [(ngModel)]="tix.category"
+												[ngClass]="{ 'is-invalid': submitted && fval.category.errors }"
+												required (click)="setType()" class="nice-select" >
+		                                            <option>bulbos</option>
+		                                            <option>frutos</option>
+		                                            <option>legumbres</option>
+		                                            <option>Tuberculos</option>
+		                                            <option>Verduras</option>
+		                                        </select>
+		                                    </div>
+
+
+
+												<div *ngIf="submitted && fval.category.errors" class="invalid-feedback">
+													<div *ngIf="fval.category.errors.required" class="errorLabel">
+													* La categoria es requerida
+													</div>
+												</div>
+											</div>	
+											<div class="col-md-12 col-xs-12">
+												<div class="form-group">
+													<input type="text" class="form-control" id="notes" placeholder="Información extra" [(ngModel)]="tix.notes" [ngModelOptions]="{standalone: true}"
+													>	
+												</div>
+											</div>	
+											<div class="col-md-12 text-center" *ngIf="this._uw.errorFormAddtixs">
+												<i class="ti-thumb-down cl-danger font-50"></i>
+												<h3 class="cl-danger">Error!</h3>
+													<div *ngIf="submitted && fval.productName.errors" class="invalid-feedback">
+															<div *ngIf="fval.productName.errors.required" class="errorLabel">
+															* El título es requerido
+															</div>
+													</div>
+													<div *ngIf="submitted && fval.description.errors" class="invalid-feedback">
+														<div *ngIf="fval.description.errors.required" class="errorLabel">
+														* La descripción es requerida 
+														</div>
+													</div>
+													<div *ngIf="submitted && fval.category.errors" class="invalid-feedback">
+														<div *ngIf="fval.category.errors.required" class="errorLabel">
+														* La categoría es requerida
+														</div>
+													</div>	
+											</div>
+										</div>				
+										 <button type="button" (click)="sendTix()"  >Guardar</button>
+									  </aw-wizard-step>
+								</aw-wizard>
+							</form>							
+						</div>	
+					</div>	
+	</div>
+</div>
+<div class="sidebar-overlay open"></div>
+<div class="flex-grow-1"></div>

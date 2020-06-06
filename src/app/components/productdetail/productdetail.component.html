@@ -1,0 +1,222 @@
+ <div class="main-content pt-4">
+    <div class="breadcrumb">
+        <ul>
+            <li><a routerLink="/products" >Productos</a></li>
+            <li>Detalle del producto</li>
+        </ul>
+    </div>
+    <div class="separator-breadcrumb border-top"></div>
+    <section class="ul-product-detail">
+        <div class="row" *ngIf="tix !== undefined && !this._uw.editingTrek">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="ul-product-detail__image"><img src="{{tix.images[0]}}"  alt="alt" /></div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="ul-product-detail__brand-name mb-4">
+                                    <h5 class="heading">{{tix.productName}}</h5><span class="text-mute">{{tix.category}}</span>
+                                </div>
+                                <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
+                                    <h3 class="font-weight-700 text-primary mb-0 mr-2">
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">Bs.S. </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].usd">COLP </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].colp">$ USD </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].bs">
+                                       {{tix.globalPrice*this._uw.currency  |  number:'1.2-2' }}</span>
+                                       <span [hidden]="this._uw.currency==this._uw.info[0].usd">
+                                       {{tix.globalPrice*this._uw.currency  |  number:'1.0-0' }} </span> 
+                                       <span> ({{tix.presentacion}})</span> 
+                                <!--        <button class="btn btn-primary m-1" type="button"><i class="i-Arrow-Refresh text-15"></i> Actualizar precio</button> -->
+                                    </h3><span class="text-mute font-weight-800 mr-2">
+                                       </span>
+                                </div>
+                                <div class="ul-product-detail__features mt-3">
+                                    <h6 class="font-weight-700">{{tix.description}}</h6>
+                                </div>
+                                <!-- <div class="ul-product-detail__quantity d-flex align-items-center mt-3">
+                                    <input class="form-control col-7" type="number" />
+                                    <button class="btn btn-success m-1" type="button"><i class="fa fa-check text-15"></i> </button>
+                                </div> -->
+                            </div>
+                             <div class="col-lg-6 col-md-12">
+                        <!-- CARD ICON-->
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <form class="form" [formGroup]="ngFormCostPrice" *ngIf="tix">
+                                    <div class="card card-icon mb-4">
+                                        <div class="card-body text-center"><i class="i-Coin" (click)="editarCostPrice()"  style="cursor: pointer !important;"></i>
+                                            <p class="text-muted mt-2 mb-2"  (click)="editarCostPrice()" style="cursor: pointer !important;">Precio de costo (Bs.S)</p>
+                                            <p class="text-primary text-24 line-height-1 m-0" [hidden]="editingCostPrice" (click)="editarCostPrice()" style="cursor: pointer !important; ">{{tix.costPrice}}</p>
+                                            <div class="col-sm-12" [hidden]="!editingCostPrice">
+                                                <input type="number" class="form-control" id="costPrice"  placeholder="" min="0" [(ngModel)]="tix.costPrice"
+                                                formControlName="costPrice" 
+                                                [ngClass]="{ 'is-invalid': submittedCostPrice && fvalCostPrice.costPrice.errors }"
+                                                required  >
+                                                <div *ngIf="submittedCostPrice && fvalCostPrice.costPrice.errors" class="invalid-feedback">
+                                                    <div *ngIf="fvalCostPrice.costPrice.errors.required" class="errorLabel">
+                                                    * Campo requerido.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <button class="btn btn-success btn-sm m-1" type="button" [hidden]="!editingCostPrice" (click)="updateCostPrice(tix)"><i class="fa fa-check text-15"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <!-- <div class="card card-icon mb-4">
+                                    <div class="card-body text-center"><i class="i-Coins-2"></i>
+                                        <p class="text-muted mt-2 mb-2">% de ganancia</p>
+                                        <p class="text-primary text-24 line-height-1 m-0">21</p>
+                                        <button class="btn btn-success btn-sm m-1" type="button"><i class="fa fa-check text-15"></i></button>
+                                    </div>
+                                </div> -->
+                                 <form class="form" [formGroup]="ngFormBeneficio" *ngIf="tix">
+                                    <div class="card card-icon mb-4">
+                                        <div class="card-body text-center"><i class="i-Coins-2"  (click)="editarBeneficio()"  style="cursor: pointer !important;"></i>
+                                            <p class="text-muted mt-2 mb-2" (click)="editarBeneficio()"  style="cursor: pointer !important;"> Margen de Ganancia (%)</p>
+                                            <p class="text-primary text-24 line-height-1 m-0" [hidden]="editingBeneficio" (click)="editarBeneficio()" style="cursor: pointer !important;">{{tix.beneficio}}</p>
+                                            <div class="col-sm-12" [hidden]="!editingBeneficio">
+                                                <input type="number" class="form-control" id="beneficio"  placeholder="" min="0" max="500"[(ngModel)]="tix.beneficio"
+                                                formControlName="beneficio" 
+                                                [ngClass]="{ 'is-invalid': submittedBeneficio && fvalBeneficio.beneficio.errors }"
+                                                required  >
+                                                <div *ngIf="submittedBeneficio && fvalBeneficio.beneficio.errors" class="invalid-feedback">
+                                                    <div *ngIf="fvalBeneficio.beneficio.errors.required" class="errorLabel">
+                                                    * Campo requerido.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <button class="btn btn-success btn-sm m-1" type="button" [hidden]="!editingBeneficio" (click)="updateBeneficio(tix)"><i class="fa fa-check text-15"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                            <!--     <div class="card card-icon mb-4">
+                                    <div class="card-body text-center"><i class="i-Ship-2"></i>
+                                        <p class="text-muted mt-2 mb-2">Nivel de stock</p>
+                                        <p class="text-primary text-24 line-height-1 m-0">4021</p>
+                                        <button class="btn btn-success btn-sm m-1" type="button"><i class="fa fa-check text-15"></i></button>
+                                    </div>
+                                </div> -->
+
+
+                                <form class="form" [formGroup]="ngFormStock" *ngIf="tix" >
+                                    <div class="card card-icon mb-4">
+                                        <div class="card-body text-center" ><i class="i-Ship-2"  (click)="editarStock()"  style="cursor: pointer !important;"></i>
+                                            <p class="text-muted mt-2 mb-2" (click)="editarStock()"  style="cursor: pointer !important;"> Existencia / Stock minimo</p>
+                                            <p class="text-primary text-24 line-height-1 m-0" [hidden]="editingStock || tix.stock<tix.stockmin" (click)="editarStock()" style="cursor: pointer !important;">{{tix.stock}} / {{tix.stockmin}}</p>
+                                             <p class="text-danger text-24 line-height-1 m-0" [hidden]="editingStock || tix.stock>=tix.stockmin" (click)="editarStock()" style="cursor: pointer !important;">{{tix.stock}} / {{tix.stockmin}}</p>
+                                            <div class="col-sm-12" [hidden]="!editingStock">
+                                                <input type="number" class="form-control" id="stock"  placeholder="" min="0" max="500"[(ngModel)]="tix.stock"
+                                                formControlName="stock" 
+                                                [ngClass]="{ 'is-invalid': submittedStock && fvalStock.stock.errors }"
+                                                required  >
+                                                <div *ngIf="submittedStock && fvalStock.stock.errors" class="invalid-feedback">
+                                                    <div *ngIf="fvalStock.stock.errors.required" class="errorLabel">
+                                                    * Campo requerido.
+                                                    </div>
+                                                </div>
+                                                 <input type="number" class="form-control" id="stockmin"  placeholder="" min="0" max="5000"[(ngModel)]="tix.stockmin"
+                                                formControlName="stockmin" 
+                                                [ngClass]="{ 'is-invalid': submittedStock && fvalStock.stock.errors }"
+                                                required  >
+                                                <div *ngIf="submittedStock && fvalStock.stock.errors" class="invalid-feedback">
+                                                    <div *ngIf="fvalStock.stock.errors.required" class="errorLabel">
+                                                    * Campo requerido.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                              <button class="btn btn-success btn-sm m-1" type="button" [hidden]="!editingStock" (click)="updateStock(tix)"><i class="fa fa-check text-15"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                         <!--    <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="card card-icon-big mb-4">
+                                    <div class="card-body text-center"><i class="i-Money-2"></i>
+                                        <p class="line-height-1 text-title text-18 mt-2 mb-0">4021</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="card card-icon-big mb-4">
+                                    <div class="card-body text-center"><i class="i-Gear"></i>
+                                        <p class="line-height-1 text-title text-18 mt-2 mb-0">4021</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="card card-icon-big mb-4">
+                                    <div class="card-body text-center"><i class="i-Bell"></i>
+                                        <p class="line-height-1 text-title text-18 mt-2 mb-0">4021</p>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+                        
+
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ul-product-detail__box">
+    <!--     <div class="row">
+            <div class="col-lg-3 col-md-3 mt-4 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ul-product-detail__border-box">
+                            <div class="ul-product-detail--icon mb-2"><i class="i-Car text-success text-25 font-weight-500"></i></div>
+                            <h5 class="heading">Nivel de Stock</h5>
+                            <p class="text-muted text-12">83 / 50</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 mt-4 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ul-product-detail__border-box">
+                            <div class="ul-product-detail--icon mb-2"><i class="i-Reload text-danger text-25 font-weight-500"></i></div>
+                            <h5 class="heading">Back In 30 Days</h5>
+                            <p class="text-muted text-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 mt-4 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ul-product-detail__border-box">
+                            <div class="ul-product-detail--icon mb-2"><i class="i-Headset text-info text-25 font-weight-500"></i></div>
+                            <h5 class="heading">Support 24/7</h5>
+                            <p class="text-muted text-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 mt-4 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ul-product-detail__border-box">
+                            <div class="ul-product-detail--icon mb-2"><i class="i-Money-Bag text-warning text-25 font-weight-500"></i></div>
+                            <h5 class="heading">High Secure Payment</h5>
+                            <p class="text-muted text-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </section>
+</div>

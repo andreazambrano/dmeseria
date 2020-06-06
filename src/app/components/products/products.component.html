@@ -1,0 +1,64 @@
+
+ <div class="main-content pt-4">
+    <div class="breadcrumb">
+        <h1>Productos en inventario</h1>
+        <ul>
+            <li><h2 *ngIf="tixs">({{this._uw.tamanoProducts}})</h2></li>
+            Mostrar: 
+        </ul>
+        <div class="col">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{this.mostrar}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" (click)="getBulbos()"  style="cursor: pointer !important;">Bulbos</a>
+                    <a class="dropdown-item" (click)="getFrutos()"  style="cursor: pointer !important;">Frutos</a>
+                    <a class="dropdown-item" (click)="getLegumbres()"  style="cursor: pointer !important;">Legumbres</a>
+                    <a class="dropdown-item" (click)="getTuberculos()"  style="cursor: pointer !important;">Tubérculos</a>
+                    <a class="dropdown-item" (click)="getVerduras()"  style="cursor: pointer !important;">Verduras</a>
+                    <a class="dropdown-item" (click)="getAllTixs()"  style="cursor: pointer !important;">Todos</a>
+                </div>
+            </div>
+        </div>
+         
+
+
+    </div>
+    <div class="separator-breadcrumb border-top"></div>
+
+    <div class="product-cart">
+        <div class="row list-grid">
+            <div class="list-item col-md-3" *ngFor="let tix of tixs; index as i" >
+                <a  routerLink="/productdetail/{{tix.id}}" >
+                    <div class="card o-hidden mb-4 d-flex flex-column">
+                        <div class="list-thumb d-flex"><img alt="" src="{{tix.images[0]}}" /></div>
+                        <div class="flex-grow-1 d-bock">
+                            <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center"><a class="w-40 w-sm-100" href="product.html">
+                                    <div class="item-title" style="font-size: 1rem;">
+                                        {{tix.productName}}
+                                    </div>
+                                </a>
+                                <p class="m-0 text-muted text-small w-15 w-sm-100" style="font-size: 1rem;">  {{tix.category}}</p>
+                                <p class="m-0 text-muted text-small w-15 w-sm-100" *ngIf="_uw.info[0]" style="font-size: 1rem;">
+                                       <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">Bs.S. </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].usd">COLP </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].colp">$ USD </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].bs">
+                                       {{tix.globalPrice*this._uw.currency  |  number:'1.2-2' }}</span>
+                                       <span [hidden]="this._uw.currency==this._uw.info[0].usd">
+                                       {{tix.globalPrice*this._uw.currency  |  number:'1.0-0' }} </span>
+                                       <span> ({{tix.presentacion}})</span>
+
+                                    <!-- <del class="text-secondary">$54.00</del> -->
+                                </p>
+                                <p class="m-0 text-muted text-small w-15 w-sm-100 d-none d-lg-block item-badges"><span class="badge badge-success" style="font-size: 1rem;">Disponible</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</div>

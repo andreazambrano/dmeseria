@@ -1,0 +1,164 @@
+<div class="main-content pt-4" *ngIf="_uw.info[0]">
+    <div class="breadcrumb">
+        <h1>Parámetros de aplicación</h1>
+    </div>
+    <div class="separator-breadcrumb border-top"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Valores de moneda</h4>
+            <p>Última actualización: 13 Abril de 2020</p>
+            <div class="card mb-5">
+                <div class="card-body">
+                  <form class="form" [formGroup]="ngFormCurrency" *ngIf="infoNew">
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label" >Dolar USA ($USD) 
+                            <span style="font-size: 1.5em;"><b>  {{infoNew.usd |  number:'1.0-0' }} Bs.S</b></span>
+                        </label>
+                            <div class="col-sm-4" [hidden]="!editing">
+                              	<input type="text" class="form-control" id="usd"  placeholder="USD"[(ngModel)]="infoNew.usd"
+                              	formControlName="usd" 
+								[ngClass]="{ 'is-invalid': submittedCurrency && fval.usd.errors }"
+								required  >
+								<div *ngIf="submittedCurrency && fval.usd.errors" class="invalid-feedback">
+									<div *ngIf="fval.usd.errors.required" class="errorLabel">
+									* Campo requerido.
+									</div>
+								</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-8 col-form-label" for="inputPassword3">Peso Colombiano (COLP) 
+                                <span style="font-size: 1.5em;"><b>  {{infoNew.colp}} Bs.S</b></span>
+                            </label>
+                            <div class="col-sm-4" [hidden]="!editing">
+                               	<input type="text" class="form-control" id="colp" placeholder="COLP" [(ngModel)]="infoNew.colp"
+                               	formControlName="colp" 
+								[ngClass]="{ 'is-invalid': submittedCurrency && fval.colp.errors }"
+								required>
+								<div *ngIf="submittedCurrency && fval.colp.errors" class="invalid-feedback">
+									<div *ngIf="fval.colp.errors.required" class="errorLabel">
+									* Campo requerido.
+									</div>
+								</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button class="btn btn-primary btn-sm"  (click)="editar()" [hidden]="editing">Actualizar</button>
+                                 <button class="btn btn-success"  (click)="updateCurrency(infoNew)" [hidden]="!editing">Guardar</button>
+                            </div>
+                        </div>
+                   </form>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-6">
+             <div class="menu-icon-grid"><a href="dashboard1.html#"><i class="i-Warning-Window"></i> </a></div>
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Cuidado!</h4>
+                <p></p>
+                <p class="mb-0">Tenga en cuenta que los dígitos decimales deben ser precedidos por un punto (.)</p>
+            </div>
+        </div>
+         <div class="col-md-8">
+            <h4>Wallets Address</h4>
+            <div class="card mb-5">
+                <div class="card-body">
+                    <form class="form" [formGroup]="ngFormAddress" *ngIf="infoNew">
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label" >Bitcoin Address</label>
+                        <div class="col-sm-7" [hidden]="editingAddress">
+                            <span style="font-size: 1.5em;"><b>  {{infoNew.bitcoinaddress }} </b></span>
+                        </div>
+                            <div class="col-sm-7" [hidden]="!editingAddress">
+                                <input type="text" class="form-control" id="bitcoinaddress"  placeholder="Bitcoin"[(ngModel)]="infoNew.bitcoinaddress"
+                                formControlName="bitcoinaddress" 
+                                [ngClass]="{ 'is-invalid': submittedAddress && fvalAddress.bitcoinaddress.errors }"
+                                required  >
+                                <div *ngIf="submittedAddress && fvalAddress.bitcoinaddress.errors" class="invalid-feedback">
+                                    <div *ngIf="fvalAddress.bitcoinaddress.errors.required" class="errorLabel">
+                                    * Campo requerido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-5 col-form-label" >PayPal Address  </label>
+                            <div class="col-sm-7" [hidden]="editingAddress">
+                                <span style="font-size: 1.5em;"><b>  {{infoNew.paypaladdress }} </b></span>
+                            </div>
+                            <div class="col-sm-7" [hidden]="!editingAddress">
+                                <input type="text" class="form-control" id="paypaladdress"  placeholder="paypal"[(ngModel)]="infoNew.paypaladdress"
+                                formControlName="paypaladdress" 
+                                [ngClass]="{ 'is-invalid': submittedAddress && fvalAddress.paypaladdress.errors }"
+                                required  >
+                                <div *ngIf="submittedAddress && fvalAddress.paypaladdress.errors" class="invalid-feedback">
+                                    <div *ngIf="fvalAddress.paypaladdress.errors.required" class="errorLabel">
+                                    * Campo requerido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button class="btn btn-primary btn-sm"  (click)="editarAddress()" [hidden]="editingAddress">Actualizar</button>
+                                 <button class="btn btn-success"  (click)="updateAddress(infoNew)" [hidden]="!editingAddress">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h4>Porcentajes de recargo</h4>
+            <div class="card mb-5">
+                <div class="card-body">
+                    <form class="form" [formGroup]="ngFormPorcentaje" *ngIf="infoNew">
+                        <div class="form-group row">
+                            <label class="col-sm-7 col-form-label" >Bitcoin 
+                            </label>
+                             <div class="col-sm-5" [hidden]="editingPorcentaje">
+                                <span style="font-size: 1.5em;"><b>{{infoNew.bitcoin}} %</b></span>
+                            </div>
+                            <div class="col-sm-5" [hidden]="!editingPorcentaje">
+                                <input type="text" class="form-control" id="bitcoin"  placeholder="Bitcoin"[(ngModel)]="infoNew.bitcoin"
+                                formControlName="bitcoin" 
+                                [ngClass]="{ 'is-invalid': submittedPorcentaje && fvalPorcentaje.bitcoin.errors }"
+                                required  >
+                                <div *ngIf="submittedPorcentaje && fvalPorcentaje.bitcoin.errors" class="invalid-feedback">
+                                    <div *ngIf="fvalPorcentaje.bitcoin.errors.required" class="errorLabel">
+                                    * Campo requerido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-7 col-form-label" >Paypal 
+                            </label>
+                             <div class="col-sm-5" [hidden]="editingPorcentaje">
+                               <span style="font-size: 1.5em;"><b>{{infoNew.paypal}} %</b></span>
+                           </div>
+                            <div class="col-sm-5" [hidden]="!editingPorcentaje">
+                                <input type="text" class="form-control" id="bitcoin"  placeholder="PayPal"[(ngModel)]="infoNew.paypal"
+                                formControlName="paypal" 
+                                [ngClass]="{ 'is-invalid': submittedPorcentaje && fvalPorcentaje.paypal.errors }"
+                                required  >
+                                <div *ngIf="submittedPorcentaje && fvalPorcentaje.paypal.errors" class="invalid-feedback">
+                                    <div *ngIf="fvalPorcentaje.paypal.errors.required" class="errorLabel">
+                                    * Campo requerido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button class="btn btn-primary btn-sm"  (click)="editarPorcentaje()" [hidden]="editingPorcentaje">Actualizar</button>
+                                 <button class="btn btn-success"  (click)="updatePorcentaje(infoNew)" [hidden]="!editingPorcentaje">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
