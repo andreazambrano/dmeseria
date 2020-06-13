@@ -87,7 +87,7 @@ public tix : TixInterface ={
     this.ngFormAddtixs = this.formBuilder.group({
       productName: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      category: ['', [Validators.required]],
+      dimensiones: ['', [Validators.required]],
       presentacion:[true, [Validators.required]],
       globalPrice: [0,[Validators.required]]
       });

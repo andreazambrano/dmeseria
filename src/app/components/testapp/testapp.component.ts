@@ -36,9 +36,9 @@ export class TestappComponent implements OnInit {
     this.loadInfo();
     this._uw.currency=this._uw.info[0].colp;
   }
-  setBs(){
+  setClp(){
     this.loadInfo();
-    this._uw.currency=this._uw.info[0].bs;
+    this._uw.currency=this._uw.info[0].clp;
   }
    setUsd(){
     this.loadInfo();
