@@ -78,6 +78,11 @@
                                 </div>
                                 <div class="col-md-5" style="
                         padding: 15px 15px 15px 15px; background:#fff!important; border-radius: 10px;" [hidden]="!updateImages">
+                            <div class="alert alert-warning" role="alert">
+                <!-- <h4 class="alert-heading">!</h4> -->
+                <p></p>
+                 <p class="mb-0"><b>2</b> o más imágenes <b>cuadradas</b> de cualquier tamaño</p>
+            </div>
                         <ngx-file-picker
                             [uploadType]="'multi'"
                             (validationError)= "onValidationError($event)"
