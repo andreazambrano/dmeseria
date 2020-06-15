@@ -17159,7 +17159,7 @@ a.typo_link.text-gray-900:after {
   cursor: pointer !important; }
 
 .gull-brand img {
-  width: 60px;
+  width: 100%;
   margin-right: 5px; }
 
 .gull-sidebar--width {

@@ -2,7 +2,7 @@
  <div class="main-content pt-4">
     <div class="breadcrumb">
         <h1>Productos en inventario</h1>
-        <ul>
+   <!--      <ul>
             <li><h2 *ngIf="tixs">({{this._uw.tamanoProducts}})</h2></li>
             Mostrar: 
         </ul>
@@ -20,7 +20,7 @@
                     <a class="dropdown-item" (click)="getAllTixs()"  style="cursor: pointer !important;">Todos</a>
                 </div>
             </div>
-        </div>
+        </div> -->
          
 
 
@@ -41,14 +41,14 @@
                                 </a>
                                 <p class="m-0 text-muted text-small w-15 w-sm-100" style="font-size: 1rem;">  {{tix.category}}</p>
                                 <p class="m-0 text-muted text-small w-15 w-sm-100" *ngIf="_uw.info[0]" style="font-size: 1rem;">
-                                       <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">Bs.S. </span>
-                                        <span [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].usd">COLP </span>
-                                        <span [hidden]="this._uw.currency==this._uw.info[0].bs || this._uw.currency==this._uw.info[0].colp">$ USD </span>
-                                        <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].bs">
+                                       <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">CLP. </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].usd">COLP </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].colp">$ USD </span>
+                                        <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].clp">
                                        {{tix.globalPrice*this._uw.currency  |  number:'1.2-2' }}</span>
                                        <span [hidden]="this._uw.currency==this._uw.info[0].usd">
                                        {{tix.globalPrice*this._uw.currency  |  number:'1.0-0' }} </span>
-                                       <span> ({{tix.presentacion}})</span>
+                                       <span> ({{tix.dimensiones}})</span>
 
                                     <!-- <del class="text-secondary">$54.00</del> -->
                                 </p>

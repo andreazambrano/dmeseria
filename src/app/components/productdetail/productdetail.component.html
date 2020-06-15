@@ -9,129 +9,182 @@
     <section class="ul-product-detail">
         <div class="row" *ngIf="tix !== undefined && !this._uw.editingTrek">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="ul-product-detail__image"><img src="{{tix.images[0]}}"  alt="alt" /></div>
+                <form class="form" [formGroup]="ngFormProductInfo" *ngIf="tix">
+                      <!--   <div class="alert alert-card alert-danger" role="alert" [hidden]="!deletingProduct || !deleted" ><strong class="text-capitalize">Producto borrado!</strong> 
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                        </div> -->
+                         <div class="alert alert-card alert-danger text-center" role="alert" [hidden]="!deletingProduct || !deleted">El producto ha sido borrado!
+                            <button class="btn btn-rounded btn-primary ml-3" routerLink="/products">Ir a Productos</button>
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                         <div class="alert alert-card alert-info text-center" role="alert" [hidden]="!edited">El producto ha editado!
+                            <button class="btn btn-rounded btn-primary ml-3" routerLink="/products">Ir a Productos</button>
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                    <div class="card " [hidden]="deleted || edited">
+                        <div class="card-body">
+                            <div class="text-right" >
+                                 
+                                <button class="btn btn-inverse btn-sm m-1" data-toggle="tooltip" title="Editar" type="button" [hidden]="updateImages || editingProductInfo || deletingProduct" (click)="editarProductInfo()" ><i class="i-Pen-4 text-15" style="cursor: pointer !important;"> </i> 
+                                </button>
+                                <button class="btn btn-primary btn-sm m-1" type="button" [hidden]="!editingProductInfo  || deletingProduct" (click)="updateProductInfo(tix)" style="cursor: pointer !important;"><i class="fa fa-check text-15"> </i> Guardar cambios
+                                </button>
+                                <button class="btn btn-inverse btn-sm m-1" data-toggle="tooltip" title="Borrar"  type="button" [hidden]="updateImages || deletingProduct || editingProductInfo" (click)="deleteProduct()"> <i class="i-Close-Window text-15"></i> 
+                                </button>
+                             <!--    <button class="btn btn-inverse btn-sm m-1" data-toggle="tooltip" title="Cancelar"  type="button" [hidden]="!updateImages" (click)="calcelUpdate();"><i class="i-arrow-left text-15"></i> Cancelar
+                                </button> -->
                             </div>
-                            <div class="col-lg-3">
-                                <div class="ul-product-detail__brand-name mb-4">
-                                    <h5 class="heading">{{tix.productName}}</h5><span class="text-mute">{{tix.category}}</span>
-                                </div>
-                                <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
-                                    <h3 class="font-weight-700 text-primary mb-0 mr-2">
-                                        <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">CLP </span>
-                                        <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].usd">COLP </span>
-                                        <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].colp">$ USD </span>
-                                        <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].clp">
-                                       {{tix.globalPrice*this._uw.currency  |  number:'1.2-2' }}</span>
-                                       <span [hidden]="this._uw.currency==this._uw.info[0].usd">
-                                       {{tix.globalPrice*this._uw.currency  |  number:'1.0-0' }} </span> 
-                                       <span> ({{tix.presentacion}})</span> 
-                            
-                                    </h3><span class="text-mute font-weight-800 mr-2">
-                                       </span>
-                                </div>
-                                <div class="ul-product-detail__features mt-3">
-                                    <h6 class="font-weight-700">{{tix.description}}</h6>
-                                </div>
-                  
+                            <div class="row">
+                                <div class="col-lg-3"  [hidden]=" updateImages || deletingProduct">
+                                    <div class="text-right" [hidden]="!editingProductInfo">
+                                    <button class="btn btn-inverse btn-sm m-1"  data-toggle="tooltip" title="Cambiar imágenes" type="button" [hidden]="updateImages || deletingProduct " (click)="updateImagesFuuntion()" ><i class="i-Landscape text-15" style="cursor: pointer !important;"> </i> 
+                                </button>
                             </div>
-                             <div class="col-lg-6 col-md-12">
-                        <!-- CARD ICON-->
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <form class="form" [formGroup]="ngFormCostPrice" *ngIf="tix">
-                                    <div class="card card-icon mb-4">
-                                        <div class="card-body text-center"><i class="i-Coin" (click)="editarCostPrice()"  style="cursor: pointer !important;"></i>
-                                            <p class="text-muted mt-2 mb-2"  (click)="editarCostPrice()" style="cursor: pointer !important;">Precio de costo (Bs.S)</p>
-                                            <p class="text-primary text-24 line-height-1 m-0" [hidden]="editingCostPrice" (click)="editarCostPrice()" style="cursor: pointer !important; ">{{tix.costPrice}}</p>
-                                            <div class="col-sm-12" [hidden]="!editingCostPrice">
-                                                <input type="number" class="form-control" id="costPrice"  placeholder="" min="0" [(ngModel)]="tix.costPrice"
-                                                formControlName="costPrice" 
-                                                [ngClass]="{ 'is-invalid': submittedCostPrice && fvalCostPrice.costPrice.errors }"
-                                                required  >
-                                                <div *ngIf="submittedCostPrice && fvalCostPrice.costPrice.errors" class="invalid-feedback">
-                                                    <div *ngIf="fvalCostPrice.costPrice.errors.required" class="errorLabel">
-                                                    * Campo requerido.
+                                    <div class="ul-product-detail__image"><img src="{{tix.images[0]}}"  alt="alt" /></div>
+                                </div>
+                                <div class="col-lg-6" [hidden]="editingProductInfo || updateImages || deletingProduct">
+                                    <div class="ul-product-detail__brand-name mb-4">
+                                        <h5 class="heading">{{tix.productName}}</h5>
+                                    </div>
+                                    
+                                    <div class="ul-product-detail__features mt-3">
+                                        <h6 class="font-weight-700">{{tix.description}}
+                                      
+                                     </h6>
+                                    </div> 
+                                    <div class="ul-product-detail__features mt-3">
+                                        <h6 class="font-weight-700">
+                                         <span> ({{tix.dimensiones}})</span> 
+                                     </h6>
+                                    </div> 
+                                    <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
+                                        <h6 class="font-weight-700 text-dark mb-0 mr-1">
+                                            <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">CLP </span>
+                                            <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].usd">COLP </span>
+                                            <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].colp">$ USD </span>
+                                            <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].clp">
+                                           {{tix.globalPrice*this._uw.currency  |  number:'1.2-2' }}</span>
+                                           <span [hidden]="this._uw.currency==this._uw.info[0].usd">
+                                           {{tix.globalPrice*this._uw.currency  |  number:'1.0-0' }} </span> 
+                                        </h6><span class="text-mute font-weight-800 mr-2">
+                                           </span>
+                                    </div>                 
+                                </div>
+                                <div class="col-md-5" style="
+                        padding: 15px 15px 15px 15px; background:#fff!important; border-radius: 10px;" [hidden]="!updateImages">
+                        <ngx-file-picker
+                            [uploadType]="'multi'"
+                            (validationError)= "onValidationError($event)"
+                            [adapter]="adapter"
+                            [fileExtensions]="['pdf', 'jpeg','jpg', 'png', 'PNG', 'mp4', 'css', 'docx', 'txt','webp']"
+                            (uploadSuccess)="onUploadSuccess($event)"
+                            (removeSuccess)="onRemoveSuccess($event)"
+                          
+                            [showPreviewContainer]="true"
+                            [accept]="'image/*'"
+                            (fileAdded)="onFileAdded($event)">
+                        </ngx-file-picker>                                  
+                    </div>
+                                 <div class="col-lg-6 col-md-12">                
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-6 col-sm-6" [hidden]="!editingProductInfo">                                
+                                                <div class="card card-icon mb-4">
+                                                    <div class="card-body ">       
+                                                        <div class="col-sm-12" [hidden]="!editingProductInfo">
+                                                            <label>Titulo</label>
+                                                            <input type="text" class="form-control" id="productName"  placeholder="Título" [(ngModel)]="tix.productName"
+                                                            formControlName="productName" 
+                                                            [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.productName.errors }"
+                                                            required  >
+                                                            <div *ngIf="submittedProductInfo && fvalProductInfo.productName.errors" class="invalid-feedback">
+                                                                <div *ngIf="fvalProductInfo.productName.errors.required" class="errorLabel">
+                                                                * Campo requerido.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12" [hidden]="!editingProductInfo">
+                                                              <label>Descripción</label>
+                                                            <input type="text" class="form-control" id="description"  placeholder="Descripción" [(ngModel)]="tix.description"
+                                                            formControlName="description" 
+                                                            [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.description.errors }"
+                                                            required  >
+                                                            <div *ngIf="submittedProductInfo && fvalProductInfo.description.errors" class="invalid-feedback">
+                                                                <div *ngIf="fvalProductInfo.description.errors.required" class="errorLabel">
+                                                                * Campo requerido.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12" [hidden]="!editingProductInfo">
+                                                              <label>Dimensiones</label>
+                                                            <input type="text" class="form-control" id="dimensiones"  placeholder="Dimensiones" [(ngModel)]="tix.dimensiones"
+                                                            formControlName="dimensiones" 
+                                                            [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.dimensiones.errors }"
+                                                            required  >
+                                                            <div *ngIf="submittedProductInfo && fvalProductInfo.dimensiones.errors" class="invalid-feedback">
+                                                                <div *ngIf="fvalProductInfo.dimensiones.errors.required" class="errorLabel">
+                                                                * Campo requerido.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12" [hidden]="!editingProductInfo">
+                                                              <label>Precio</label>
+                                                            <input type="number" class="form-control" id="globalPrice" min="0" placeholder="Precio" [(ngModel)]="tix.globalPrice"
+                                                            formControlName="globalPrice" 
+                                                            [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.globalPrice.errors }"
+                                                            required  >
+                                                            <div *ngIf="submittedProductInfo && fvalProductInfo.globalPrice.errors" class="invalid-feedback">
+                                                                <div *ngIf="fvalProductInfo.globalPrice.errors.required" class="errorLabel">
+                                                                * Campo requerido.
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                              <button class="btn btn-success btn-sm m-1" type="button" [hidden]="!editingCostPrice" (click)="updateCostPrice(tix)"><i class="fa fa-check text-15"></i></button>
+                                                </div>                          
+                                            </div>  
+                                            <div class="col-lg-8 col-md-6 col-sm-6" [hidden]="!deletingProduct || deleted">                                
+                                                <div class="card card-icon mb-4">
+                                                    <div class="card-body ">       
+                                                        <div class="col-sm-12" >
+                                                            <label>Confirma que desea borrar el producto?</label>
+                                                             <button class="btn btn-danger btn-sm m-1" data-toggle="tooltip" title="Cancelar"  type="button"  (click)="borrar(tix)"><i class="fa fa-check text-15"></i> Borrar
+                                                            </button>
+                                                           <button class="btn btn-inverse btn-sm m-1" data-toggle="tooltip" title="Cancelar"  type="button"  (click)="cancelBorrar()"><i class="fa fa-close text-15"></i> Cancelar
+                                                            </button>
+                                                        </div>
+                                             
+                                                    </div>
+                                                </div>                          
+                                            </div>  
+                                         <!--    <div class="col-lg-8 col-md-6 col-sm-6" [hidden]="!deletingProduct || !deleted" >                                
+                                                <div class="card card-icon mb-4">
+                                                    <div class="card-body ">       
+                                                        <div class="col-sm-12" >
+                                                            <label>Producto borradi</label>
+                                                            
+                                                           <button class="btn btn-inverse btn-sm m-1" data-toggle="tooltip" title="Cancelar"  type="button" routerLink="/products" ><i class="fa fa-close text-15"></i> Continuar
+                                                            </button>
+                                                        </div>
+                                             
+                                                    </div>
+                                                </div>                          
+                                            </div>   -->
+
+
+
                                         </div>
                                     </div>
-                                </form>
+
+
+
+                                            
+                                       
+
                             </div>
-                          <!--   <div class="col-lg-4 col-md-6 col-sm-6">
-                       
-                                 <form class="form" [formGroup]="ngFormBeneficio" *ngIf="tix">
-                                    <div class="card card-icon mb-4">
-                                        <div class="card-body text-center"><i class="i-Coins-2"  (click)="editarBeneficio()"  style="cursor: pointer !important;"></i>
-                                            <p class="text-muted mt-2 mb-2" (click)="editarBeneficio()"  style="cursor: pointer !important;"> Margen de Ganancia (%)</p>
-                                            <p class="text-primary text-24 line-height-1 m-0" [hidden]="editingBeneficio" (click)="editarBeneficio()" style="cursor: pointer !important;">{{tix.beneficio}}</p>
-                                            <div class="col-sm-12" [hidden]="!editingBeneficio">
-                                                <input type="number" class="form-control" id="beneficio"  placeholder="" min="0" max="500"[(ngModel)]="tix.beneficio"
-                                                formControlName="beneficio" 
-                                                [ngClass]="{ 'is-invalid': submittedBeneficio && fvalBeneficio.beneficio.errors }"
-                                                required  >
-                                                <div *ngIf="submittedBeneficio && fvalBeneficio.beneficio.errors" class="invalid-feedback">
-                                                    <div *ngIf="fvalBeneficio.beneficio.errors.required" class="errorLabel">
-                                                    * Campo requerido.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                              <button class="btn btn-success btn-sm m-1" type="button" [hidden]="!editingBeneficio" (click)="updateBeneficio(tix)"><i class="fa fa-check text-15"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div> -->
-          <!--                   <div class="col-lg-4 col-md-6 col-sm-6">
-                                <form class="form" [formGroup]="ngFormStock" *ngIf="tix" >
-                                    <div class="card card-icon mb-4">
-                                        <div class="card-body text-center" ><i class="i-Ship-2"  (click)="editarStock()"  style="cursor: pointer !important;"></i>
-                                            <p class="text-muted mt-2 mb-2" (click)="editarStock()"  style="cursor: pointer !important;"> Existencia / Stock minimo</p>
-                                            <p class="text-primary text-24 line-height-1 m-0" [hidden]="editingStock || tix.stock<tix.stockmin" (click)="editarStock()" style="cursor: pointer !important;">{{tix.stock}} / {{tix.stockmin}}</p>
-                                             <p class="text-danger text-24 line-height-1 m-0" [hidden]="editingStock || tix.stock>=tix.stockmin" (click)="editarStock()" style="cursor: pointer !important;">{{tix.stock}} / {{tix.stockmin}}</p>
-                                            <div class="col-sm-12" [hidden]="!editingStock">
-                                                <input type="number" class="form-control" id="stock"  placeholder="" min="0" max="500"[(ngModel)]="tix.stock"
-                                                formControlName="stock" 
-                                                [ngClass]="{ 'is-invalid': submittedStock && fvalStock.stock.errors }"
-                                                required  >
-                                                <div *ngIf="submittedStock && fvalStock.stock.errors" class="invalid-feedback">
-                                                    <div *ngIf="fvalStock.stock.errors.required" class="errorLabel">
-                                                    * Campo requerido.
-                                                    </div>
-                                                </div>
-                                                 <input type="number" class="form-control" id="stockmin"  placeholder="" min="0" max="5000"[(ngModel)]="tix.stockmin"
-                                                formControlName="stockmin" 
-                                                [ngClass]="{ 'is-invalid': submittedStock && fvalStock.stock.errors }"
-                                                required  >
-                                                <div *ngIf="submittedStock && fvalStock.stock.errors" class="invalid-feedback">
-                                                    <div *ngIf="fvalStock.stock.errors.required" class="errorLabel">
-                                                    * Campo requerido.
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                              <button class="btn btn-success btn-sm m-1" type="button" [hidden]="!editingStock" (click)="updateStock(tix)"><i class="fa fa-check text-15"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div> -->
-
-
-                        
-
                         </div>
                     </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
-    </section>
-    <section class="ul-product-detail__box">
-   
     </section>
 </div>

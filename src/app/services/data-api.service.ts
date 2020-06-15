@@ -127,6 +127,13 @@ export class DataApiService {
 		.put<TixInterface>(url_api, tix)
 		.pipe(map(data => data));
 	}
+		updateTixProductInfo(tix :TixInterface, id: string){
+		// let token = this.authService.getToken();
+		const url_api=`https://db.lameseria.cl:3029/api/tixes/${id}`;
+		return this.http
+		.put<TixInterface>(url_api, tix)
+		.pipe(map(data => data));
+	}
 	updateTixBeneficio(tix :TixInterface, id: string){
 		// let token = this.authService.getToken();
 		const url_api=`https://db.lameseria.cl:3029/api/tixes/${id}`;

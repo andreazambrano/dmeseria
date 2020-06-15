@@ -1,13 +1,18 @@
 import { ActivatedRoute, Params} from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { DataApiService } from '../../services/data-api.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { TixInterface } from '../../models/tix-interface'; 
+import { HttpClient } from  '@angular/common/http';
+
 import { UserWService } from "../../services/user-w.service";
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { DemoFilePickerAdapter } from  '../../file-picker.adapter';
+import { FilePickerComponent } from '../../../assets/file-picker/src/lib/file-picker.component';
+import { FilePreviewModel } from '../../../assets/file-picker/src/lib/file-preview.model';
+import { ValidationError } from '../../../assets/file-picker/src/lib/validation-error.model';
 import { isError } from "util";
-// declare var $: any;
 @Component({
   selector: 'app-productdetail',
   templateUrl: './productdetail.component.html',
@@ -16,16 +21,13 @@ import { isError } from "util";
 export class ProductdetailComponent implements OnInit {
 
 
- loadAPI = null;   
- url6 = "assets/dist-assets/js/scripts/script.min.js";
- url5 = "assets/dist-assets/js/scripts/script_2.min.js";
- url4 = "assets/dist-assets/js/scripts/echart.options.min.js";
-  url = "assets/dist-assets/js/scripts/apexAreaChart.script.min.js";
-  url2 = "assets/dist-assets/js/scripts/echarts.script.min.js";
-  urla="assets/dist-assets/js/scripts/dashboard.v4.script.min.js";
-  url3 = "assets/dist-assets/js/scripts/widgets-statistics.min.js";
+   adapter = new DemoFilePickerAdapter(this.http,this._uw);
+  @ViewChild('uploader', { static: true }) uploader: FilePickerComponent;
+   myFiles: FilePreviewModel[] = [];
 
+ loadAPI = null;   
   constructor(
+      private  http: HttpClient,
     public _uw:UserWService,
     private dataApi: DataApiService,
     private location: Location,
@@ -34,132 +36,114 @@ export class ProductdetailComponent implements OnInit {
     private formBuilder: FormBuilder
   	) { }
 
+     public images:any[]=[];
 
-    ngFormCostPrice: FormGroup;
-    ngFormBeneficio: FormGroup;
-    ngFormStock: FormGroup;
-
-    submittedCostPrice= false;
-    submittedBeneficio = false;
-    submittedStock = false;
-
-
-    editingCostPrice=false;
-    editingBeneficio=false;
-    editingStock=false;
-
-    tixCostPrice:any={};
-    tixBeneficio:any={};
-    tixStock:any={};
+    ngFormProductInfo: FormGroup;
+    submittedProductInfo= false;
+    editingProductInfo=false;
+    updateImages=false;
+    deletingProduct=false;
+    deleted=false;
+    edited=false;
+    tixProductInfo:any={};
 
     public tixUpdate:TixInterface;
     public tix:TixInterface;
 
-    editarCostPrice(){
-        this.editingCostPrice=true;
-    }
-    editarBeneficio(){
-        this.editingBeneficio=true;
-    }
-    editarStock(){
-        this.editingStock=true;
+    editarProductInfo(){
+        this.editingProductInfo=true;
     }
 
-    updateCostPrice(tix){
-      this.submittedCostPrice= true;
-      if (this.ngFormCostPrice.invalid) {
-        this._uw.errorFormCostPrice=true;
+    updateImagesFuuntion(){
+
+      this.updateImages=true;
+    }
+
+    calcelUpdate(){
+      this.updateImages=false; 
+    }
+    deleteProduct(){
+      this.deletingProduct=true;
+    }
+    borrar(tix){
+      tix.status="deleted";
+          let id = tix.id;
+      this.dataApi.updateTixProductInfo(this.tixProductInfo, id)
+        .subscribe(
+      );
+      this.deleted=true;  
+
+    }
+    cancelBorrar(){
+      this.deletingProduct=false; 
+
+    }
+    updateProductInfo(tix){
+      this.submittedProductInfo= true;
+      if (this.ngFormProductInfo.invalid) {
+        this._uw.errorFormProductInfo=true;
         return;
       } 
-      this._uw.errorFormCostPrice=false;
-      this.tixCostPrice=tix;
-      let costPrice=tix.costPrice;
-
-      this.tixCostPrice.costPrice=costPrice;
-            this.tixCostPrice.globalPrice=this.tixCostPrice.costPrice+(this.tixCostPrice.costPrice*tix.beneficio/100);
+      this._uw.errorFormProductInfo=false;
+      this.tixProductInfo=tix;
+      if (this.updateImages){
+      this.tixProductInfo.images=this._uw.images;
+      }
       let id = tix.id;
-      this.dataApi.updateTixCostPrice(this.tixCostPrice, id)
+      this.dataApi.updateTixProductInfo(this.tixProductInfo, id)
         .subscribe(
-          // tix => this.router.navigate(['/succesConfig'])
       );
-          this.editingCostPrice=false;
-    }
-        updateBeneficio(tix){
-      this.submittedBeneficio= true;
-      if (this.ngFormBeneficio.invalid) {
-        this._uw.errorFormBeneficio=true;
-        return;
-      } 
-      this._uw.errorFormBeneficio=false;
-      this.tixBeneficio=tix;
-      let beneficio=tix.beneficio;
-
-      this.tixBeneficio.beneficio=beneficio;
-      this.tixBeneficio.globalPrice=this.tixBeneficio.costPrice+(this.tixBeneficio.costPrice*tix.beneficio/100);
-      let id = tix.id;
-      this.dataApi.updateTixBeneficio(this.tixBeneficio, id)
-        .subscribe(
-          // tix => this.router.navigate(['/succesConfig'])
-      );
-          this.editingBeneficio=false;
-
+      this.editingProductInfo=false;
+      this.updateImages=false;
+        // this._uw.images=[];
+        this.edited=true;
+       this._uw.images=[]; 
     }
 
-    updateStock(tix){
-      this.submittedStock= true;
-      if (this.ngFormStock.invalid) {
-        this._uw.errorFormStock=true;
-        return;
-      } 
-      this._uw.errorFormStock=false;
-      this.tixStock=tix;
-      let stock=tix.stock;
-
-      this.tixStock.stock=stock;
-      this.tixStock.globalPrice=this.tixStock.costPrice+(this.tixStock.costPrice*tix.beneficio/100);
-      let id = tix.id;
-      this.dataApi.updateTixStock(this.tixStock, id)
-        .subscribe(
-          // tix => this.router.navigate(['/succesConfig'])
-      );
-          this.editingStock=false;
+    ngOnInit() {
+      // this._uw.images=[];
+      this.ngFormProductInfo = this.formBuilder.group({
+          productName: ['', [Validators.required]],
+          description: ['', [Validators.required]],
+          dimensiones: ['', [Validators.required]],
+          globalPrice: [0, [Validators.required]]
+          });
+      this.getDetails(this.route.snapshot.paramMap.get('id'));
+       if (this._uw.loaded==true){
+            this.loadAPI = new Promise(resolve => {
+             });
+          }
+       this._uw.loaded=true;
     }
+
     
-    
+    getDetails(id: string){
+      this.dataApi.getTixById(id).subscribe(tix => (this.tix = tix));
+      // this._uw.images=this.tix.images;
+    }
 
-  ngOnInit() {
+    get fvalProductInfo() {
+      return this.ngFormProductInfo.controls;
+    }
 
-    this.ngFormCostPrice = this.formBuilder.group({
-        costPrice: [0, [Validators.required]]
-        });
-    this.ngFormBeneficio = this.formBuilder.group({
-        beneficio: [0, [Validators.required]]
-        });
-    this.ngFormStock = this.formBuilder.group({
-        stock: [0, [Validators.required]],
-        stockmin: [0, [Validators.required]]
-        });
-    
-
-    this.getDetails(this.route.snapshot.paramMap.get('id'));
-     if (this._uw.loaded==true){
-          this.loadAPI = new Promise(resolve => {
-
-           });
-        }
-     this._uw.loaded=true;
+      reset():void{
+    this._uw.selectorA=true;
+    this.router.navigate(['/addtixs']);
   }
-  getDetails(id: string){
-    this.dataApi.getTixById(id).subscribe(tix => (this.tix = tix));
+   onValidationError(e: ValidationError) {
+    console.log(e);
   }
-  get fvalCostPrice() {
-      return this.ngFormCostPrice.controls;
-    }
-    get fvalBeneficio() {
-      return this.ngFormBeneficio.controls;
-    }
-    get fvalStock() {
-      return this.ngFormStock.controls;
-    }
+  onUploadSuccess(e: FilePreviewModel) {
+  this.images=this._uw.file;
+  }
+  onRemoveSuccess(e: FilePreviewModel) {  
+    console.log(e);
+  }
+  onFileAdded(file: FilePreviewModel) {
+     this.myFiles.push(file);
+  }
 
+  removeFile() {
+  this.uploader.removeFileFromList(this.myFiles[0].fileName);
+  }
 }

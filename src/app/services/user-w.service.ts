@@ -26,6 +26,7 @@ export class UserWService {
 	errorFormPartner:boolean;
 	errorFormCurrency:boolean;
 	errorFormPorcentaje:boolean;
+	errorFormProductInfo:boolean;
 	errorFormAddress:boolean;
 	errorFormCostPrice:boolean;
 	errorFormBeneficio:boolean;

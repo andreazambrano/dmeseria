@@ -22,6 +22,7 @@ export class DemoFilePickerAdapter extends FilePickerAdapter {
 
 
   public uploadFile(fileItem: FilePreviewModel) {
+     
     const form = new FormData();
     form.append('file', fileItem.file);
 
