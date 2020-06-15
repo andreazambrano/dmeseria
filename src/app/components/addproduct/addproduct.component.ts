@@ -56,7 +56,8 @@ public tix : TixInterface ={
       new:true,
       status:"",
       tallas:[],
-      typePrice:"global"
+      typePrice:"global",
+      weight:""
     };
 
 
@@ -89,7 +90,8 @@ public tix : TixInterface ={
       description: ['', [Validators.required]],
       dimensiones: ['', [Validators.required]],
       presentacion:[true, [Validators.required]],
-      globalPrice: [0,[Validators.required]]
+      globalPrice: [0,[Validators.required]],
+      weight: ['',[Validators.required]]
       });
   }
 

@@ -106,6 +106,7 @@ export class ProductdetailComponent implements OnInit {
           productName: ['', [Validators.required]],
           description: ['', [Validators.required]],
           dimensiones: ['', [Validators.required]],
+          weight: ['', [Validators.required]],
           globalPrice: [0, [Validators.required]]
           });
       this.getDetails(this.route.snapshot.paramMap.get('id'));

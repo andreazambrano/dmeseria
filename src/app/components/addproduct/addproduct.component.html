@@ -68,6 +68,18 @@
 													</div>
 												</div>
 											</div>
+											<div class="col-md-12 col-xs-12">
+												<div class="form-group">
+													<textarea class="form-control height-80" id="weight" formControlName="weight" placeholder="Peso" [(ngModel)]="tix.weight"
+													[ngClass]="{ 'is-invalid': submitted && fval.weight.errors }"
+													required></textarea>
+													<div *ngIf="submitted && fval.weight.errors" class="invalid-feedback">
+														<div *ngIf="fval.weight.errors.required" class="errorLabel">
+														* El peso es un campo requerido.
+														</div>
+													</div>
+												</div>
+											</div>
 
 											<div class="col-md-3 col-xs-12"  >
 												<div class="form-group">

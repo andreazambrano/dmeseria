@@ -40,5 +40,6 @@ export interface TixInterface{
 	tips?:string;
 	typePrice?:string;
 	userd?:string;
+	weight?:string;
 	
 }

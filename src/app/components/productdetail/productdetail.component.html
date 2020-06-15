@@ -45,22 +45,27 @@
                                 </div>
                                 <div class="col-lg-6" [hidden]="editingProductInfo || updateImages || deletingProduct">
                                     <div class="ul-product-detail__brand-name mb-4">
-                                        <h5 class="heading">{{tix.productName}}</h5>
+                                        <h5 class="heading">Titulo: {{tix.productName}}</h5>
                                     </div>
                                     
                                     <div class="ul-product-detail__features mt-3">
-                                        <h6 class="font-weight-700">{{tix.description}}
+                                        <h6 class="font-weight-700">Descripción: {{tix.description}}
                                       
                                      </h6>
                                     </div> 
                                     <div class="ul-product-detail__features mt-3">
                                         <h6 class="font-weight-700">
-                                         <span> ({{tix.dimensiones}})</span> 
+                                         <span>Dimensiones: {{tix.dimensiones}}</span> 
+                                     </h6>
+                                    </div>
+                                    <div class="ul-product-detail__features mt-3">
+                                        <h6 class="font-weight-700">
+                                         <span>Peso: {{tix.weight}}</span> 
                                      </h6>
                                     </div> 
                                     <div class="ul-product-detail__price-and-rating d-flex align-items-baseline">
                                         <h6 class="font-weight-700 text-dark mb-0 mr-1">
-                                            <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">CLP </span>
+                                            <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].usd">Precio: CLP </span>
                                             <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].usd">COLP </span>
                                             <span [hidden]="this._uw.currency==this._uw.info[0].clp || this._uw.currency==this._uw.info[0].colp">$ USD </span>
                                             <span [hidden]="this._uw.currency==this._uw.info[0].colp || this._uw.currency==this._uw.info[0].clp">
@@ -92,7 +97,7 @@
                                                 <div class="card card-icon mb-4">
                                                     <div class="card-body ">       
                                                         <div class="col-sm-12" [hidden]="!editingProductInfo">
-                                                            <label>Titulo</label>
+                                                            <label>Titulo: </label>
                                                             <input type="text" class="form-control" id="productName"  placeholder="Título" [(ngModel)]="tix.productName"
                                                             formControlName="productName" 
                                                             [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.productName.errors }"
@@ -104,7 +109,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12" [hidden]="!editingProductInfo">
-                                                              <label>Descripción</label>
+                                                              <label>Descripción: </label>
                                                             <input type="text" class="form-control" id="description"  placeholder="Descripción" [(ngModel)]="tix.description"
                                                             formControlName="description" 
                                                             [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.description.errors }"
@@ -116,7 +121,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12" [hidden]="!editingProductInfo">
-                                                              <label>Dimensiones</label>
+                                                              <label>Dimensiones: </label>
                                                             <input type="text" class="form-control" id="dimensiones"  placeholder="Dimensiones" [(ngModel)]="tix.dimensiones"
                                                             formControlName="dimensiones" 
                                                             [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.dimensiones.errors }"
@@ -127,8 +132,20 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                         <div class="col-sm-12" [hidden]="!editingProductInfo">
+                                                              <label>Peso: </label>
+                                                            <input type="text" class="form-control" id="weight"  placeholder="Peso" [(ngModel)]="tix.weight"
+                                                            formControlName="weight" 
+                                                            [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.weight.errors }"
+                                                            required  >
+                                                            <div *ngIf="submittedProductInfo && fvalProductInfo.weight.errors" class="invalid-feedback">
+                                                                <div *ngIf="fvalProductInfo.weight.errors.required" class="errorLabel">
+                                                                * Campo requerido.
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-sm-12" [hidden]="!editingProductInfo">
-                                                              <label>Precio</label>
+                                                              <label>Precio: </label>
                                                             <input type="number" class="form-control" id="globalPrice" min="0" placeholder="Precio" [(ngModel)]="tix.globalPrice"
                                                             formControlName="globalPrice" 
                                                             [ngClass]="{ 'is-invalid': submittedProductInfo && fvalProductInfo.globalPrice.errors }"
