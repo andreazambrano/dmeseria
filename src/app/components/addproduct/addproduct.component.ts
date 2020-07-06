@@ -111,6 +111,7 @@ public tix : TixInterface ={
       this._uw.errorFormAddtixs=false;
       this.tix = this.ngFormAddtixs.value;
       this.tix.status="activated";
+      this.tix.cantidad=1;
       this.tix.images=this._uw.images;
       this._uw.continuar=true;
       this.dataApiService.saveTixFree(this.tix)

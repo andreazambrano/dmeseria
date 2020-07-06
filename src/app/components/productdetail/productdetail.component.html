@@ -28,7 +28,9 @@
                                  
                                 <button class="btn btn-inverse btn-sm m-1" data-toggle="tooltip" title="Editar" type="button" [hidden]="updateImages || editingProductInfo || deletingProduct" (click)="editarProductInfo()" ><i class="i-Pen-4 text-15" style="cursor: pointer !important;"> </i> 
                                 </button>
-                                <button class="btn btn-primary btn-sm m-1" type="button" [hidden]="!editingProductInfo  || deletingProduct || _uw.images.length<2" (click)="updateProductInfo(tix)" style="cursor: pointer !important;"><i class="fa fa-check text-15"> </i> Guardar cambios
+                                <button class="btn btn-primary btn-sm m-1" type="button" [hidden]="!editingProductInfo  || deletingProduct || _uw.images.length<2 " (click)="updateProductInfo(tix)" style="cursor: pointer !important;"><i class="fa fa-check text-15"> </i> Guardar cambios
+                                </button>
+                                <button class="btn btn-primary btn-sm m-1" type="button" [hidden]="!editingProductInfo  || deletingProduct || updateImages " (click)="updateProductInfo(tix)" style="cursor: pointer !important;"><i class="fa fa-check text-15"> </i> Guardar cambios
                                 </button>
                                 <button class="btn btn-inverse btn-sm m-1" data-toggle="tooltip" title="Borrar"  type="button" [hidden]="updateImages || deletingProduct || editingProductInfo" (click)="deleteProduct()"> <i class="i-Close-Window text-15"></i> 
                                 </button>
