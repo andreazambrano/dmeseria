@@ -31,7 +31,7 @@
     "@types/pouchdb": "6.4.0",
     "@wkoza/ngx-upload": "^8.1.1",
     "angular-archwizard": "^5.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "ngx-awesome-uploader": "^8.1.2",
